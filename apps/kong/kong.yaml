@@ -1,18 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: apis
+  name: kong
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: apis
+  project: default
   source:
-    path: apis
-    repoURL: https://github.com/apirator/workflow-manifests.git
-    targetRevision: HEAD
+    helm:
+      version: v3
+      valueFiles:
+        - values.yaml
+    chart: kong
+    repoURL: https://charts.konghq.com
+    targetRevision: 2.2.0
   destination:
-    namespace: apis
+    namespace: kong
     server: https://kubernetes.default.svc
   syncPolicy:
     automated:
