@@ -1,24 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kong
+  name: argo-workflows
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    helm:
-      version: v3
-    chart: kong
-    repoURL: https://charts.konghq.com
-    targetRevision: 2.2.0
+    path: charts/argo-workflows
+    repoURL: https://github.com/argoproj/argo-helm.git
+    targetRevision: HEAD
   destination:
-    namespace: kong
+    namespace: argo
     server: https://kubernetes.default.svc
   syncPolicy:
     automated:
       selfHeal: true
       prune: true
-    syncOptions:
-      - CreateNamespace=true

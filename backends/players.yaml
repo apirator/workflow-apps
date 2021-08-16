@@ -1,20 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kong
+  name: players
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    helm:
-      version: v3
-    chart: kong
-    repoURL: https://charts.konghq.com
-    targetRevision: 2.2.0
+    path: stable/players
+    repoURL: https://github.com/claudioed/bets-helm.git
+    targetRevision: HEAD
   destination:
-    namespace: kong
+    namespace: bets
     server: https://kubernetes.default.svc
   syncPolicy:
     automated:
