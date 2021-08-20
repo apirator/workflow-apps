@@ -10,6 +10,11 @@ spec:
   source:
     helm:
       version: v3
+      parameters:
+        - name: ingressController.installCRDs
+          value: "false"
+#        - name: proxy.type
+#          value: "NodePort"
     chart: kong
     repoURL: https://charts.konghq.com
     targetRevision: 2.2.0

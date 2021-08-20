@@ -1,22 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: apis
+  name: workflow-templates
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: apis
+  project: default
   source:
-    path: apis
-    repoURL: https://github.com/apirator/workflow-manifests.git
+    path: templates
+    repoURL: https://github.com/apirator/workflow-definitions.git
     targetRevision: HEAD
   destination:
-    namespace: bets
+    namespace: argo
     server: https://kubernetes.default.svc
   syncPolicy:
     automated:
       selfHeal: true
       prune: true
-    syncOptions:
-      - CreateNamespace=true

@@ -10,7 +10,7 @@ spec:
   sourceRepos:
     - '*'
   destinations:
-    - namespace: apis
+    - namespace: bets
       server: https://kubernetes.default.svc
   clusterResourceWhitelist:
     - group: '*'
