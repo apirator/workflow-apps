@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backstage
-          image: claudioed:backstage
+          image: claudioed/backstage
           imagePullPolicy: Always
           ports:
             - name: http
