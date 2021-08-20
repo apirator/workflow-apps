@@ -2,21 +2,41 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: argo-workflows
-  namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
-  source:
-    path: charts/argo-workflows
-    repoURL: https://github.com/argoproj/argo-helm.git
-    targetRevision: HEAD
   destination:
-    namespace: argo
-    server: https://kubernetes.default.svc
+    namespace: "workflows"
+    server: "https://kubernetes.default.svc"
+  project: "default"
+  source:
+    chart: "argo-workflows"
+    helm:
+      values: |
+        "executor":
+          "image":
+            "tag": "v3.1.6"
+        "server":
+          "ingress":
+            "annotations":
+              "cert-manager.io/cluster-issuer": "letsencrypt-prod"
+              "kubernetes.io/ingress.class": "nginx"
+              "nginx.ingress.kubernetes.io/backend-protocol": "HTTPS"
+              "nginx.ingress.kubernetes.io/ssl-redirect": "true"
+            "enabled": true
+            "hosts":
+            - "argo-workflows.apiriders.cloud"
+            "https": true
+            "tls":
+            - "hosts":
+              - "argo-workflows.apiriders.cloud"
+              "secretName": "argo-workflows-cert"
+          "secure": true
+    repoURL: "https://argoproj.github.io/argo-helm"
+    targetRevision: "0.4.0"
   syncPolicy:
     automated:
-      selfHeal: true
       prune: true
+      selfHeal: true
     syncOptions:
-      - CreateNamespace=true
+      - "CreateNamespace=true"
