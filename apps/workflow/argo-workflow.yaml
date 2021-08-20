@@ -25,11 +25,11 @@ spec:
               "nginx.ingress.kubernetes.io/ssl-redirect": "true"
             "enabled": true
             "hosts":
-            - "argo-workflows.apiriders.cloud"
+            - "argo-workflow.apiriders.cloud"
             "https": true
             "tls":
             - "hosts":
-              - "argo-workflows.apiriders.cloud"
+              - "argo-workflow.apiriders.cloud"
               "secretName": "argo-workflows-cert"
           "secure": true
     repoURL: "https://argoproj.github.io/argo-helm"
