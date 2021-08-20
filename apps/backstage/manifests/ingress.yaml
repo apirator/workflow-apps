@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+  name: backstage
+  namespace: backstage
+spec:
+  rules:
+    - host: backstage.apiriders.cloud
+      http:
+        paths:
+          - backend:
+              service:
+                name: backstage
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - backstage.apiriders.cloud
+      secretName: backstage-cert
